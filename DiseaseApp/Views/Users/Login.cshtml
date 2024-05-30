@@ -1,0 +1,38 @@
+@model LoginViewModel
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow bg-transparent">
+                <div class="card-body p-4">
+                    <h1 class="mb-4 text-center fw-bold display-4 text-secondary">Login</h1>
+                    <form asp-action="Login" method="post" class="needs-validation" novalidate>
+                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+                        <div class="mb-3 form-group rounded-pill shadow-sm">
+                            <label asp-for="Email" class="form-label fw-bold fs-5 mb-2 text-secondary"></label>
+                            <input asp-for="Email" class="form-control" required />
+                            <div class="invalid-feedback">Please enter your email.</div>
+                        </div>
+                        <div class="mb-3 form-group rounded-pill shadow-sm">
+                            <label asp-for="Password" class="form-label fw-bold fs-5 mb-2 text-secondary"></label>
+                            <input asp-for="Password" type="password" class="form-control" required />
+                            <div class="invalid-feedback">Please enter your password.</div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100 tag-position rounded-pill shadow-sm" style="color:black;">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .btn-primary:hover{
+        background-color: #999999;
+        color: #ffff; /* darker shade of primary color */
+    }
+</style>

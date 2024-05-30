@@ -1,0 +1,67 @@
+@model PostsViewModel
+@{
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="bg-white p-4 shadow-sm rounded">
+            <h1 class="h3 mb-4 text-secondary text-center">Articles</h1>
+            @foreach (var post in Model.Posts)
+            {
+                <div class="card mb-4 border-0 shadow-sm">
+                    <div class="row g-0">
+                        @if (!string.IsNullOrEmpty(post.PostImage))
+                        {
+                            <div class="col-md-4">
+                                <img src="/lib/img/PostImage/@post.PostId/@post.PostImage" class="img-fluid rounded-start" alt="Post Image">
+                            </div>
+                        }
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="/posts/details/@post.Url" class="text-dark text-decoration-none">@post.Title</a>
+                                </h5>
+                                <p class="card-text text-muted">@post.Description</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <nav aria-label="Page navigation" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    @if (Model.CurrentPage > 1)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href='@Url.Action("Index", new { page = Model.CurrentPage - 1 })' aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    }
+
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                            <a class="page-link" href='@Url.Action("Index", new { page = i })'>@i</a>
+                        </li>
+                    }
+
+                    @if (Model.CurrentPage < Model.TotalPages)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href='@Url.Action("Index", new { page = Model.CurrentPage + 1 })' aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <vc:tags-menu></vc:tags-menu>
+        <vc:new-posts></vc:new-posts>
+    </div>
+</div>
+<script src="/lib/tinymce/tinymce.min.js"></script>

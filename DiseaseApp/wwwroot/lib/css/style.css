@@ -1,0 +1,120 @@
+body{
+    background-color:#EFF0F2 ;
+}
+a{
+    text-decoration: none;
+    color: #6d6c6c; /* White text color */
+}
+h1 {
+    font-size: 40px;
+  }
+  
+  h2 {
+    font-size: 36px;
+  }
+  
+  h3 {
+    font-size: 28px;
+  }
+  
+  h4 {
+    font-size: 24px;
+  }
+  
+  h5 {
+    font-size: 20px;
+  }
+  
+  h6 {
+    font-size: 16px;
+  }
+
+/* Custom styles */
+.navbar-dark .navbar-nav .nav-link {
+  color: #ffffff;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: #f8f9fa;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
+.navbar-dark .navbar-nav .dropdown-menu {
+  background-color: #343a40;
+  border: none;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  transition: opacity 0.3s ease-in-out;
+}
+.navbar-dark .navbar-nav .dropdown-item {
+  color: #ffffff;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+.navbar-dark .navbar-nav .dropdown-item:hover {
+  color: #212529;
+  background-color: #ffffff;
+}
+.navbar-brand img {
+  transition: transform 0.3s ease-in-out;
+}
+.navbar-brand img:hover {
+  transform: scale(1.1);
+}
+/* Dropdown Menü Yerleşimi */
+.navbar-dark .navbar-nav .dropdown-menu {
+  margin-top: 0; /* Fix overlap */
+}
+
+.dropdown-menu.show {
+  top: 100%; /* Ensure the dropdown is placed correctly */
+  left: 0;
+}
+.dropdown-menu{
+  opacity: 0.75;
+  z-index: 1000;
+}
+.newpost-position{
+  top: 325px; /* Üstten 50px */
+  right: 570px; /* Sağdan 50px */
+  background-color: rgba(0, 137, 123, 0.5);
+  color: #FFFFFF; /* White text color */
+  position:absolute;
+  margin: auto;
+  transform: translateZ(0); /*Added to fix zooming issue */
+
+}
+.tag-position{
+  background-color:#FBC02D;
+  color: #FFFFFF; /* White text color */
+}
+.popular-post-position{
+  background-color: rgba(0, 137, 123, 0.5);
+  color: #FFFFFF; /* White text color */
+
+}
+.navbar {
+  background-color: transparent !important;
+}
+.pagination .page-link {
+  color: #ffffff; /* Text color */
+  background: #039132; /* Background color */
+  padding: 5px 10px; /* Adjust padding as needed */
+  border-radius: 5px; /* Rounded corners for a nicer look */
+  border: 1px solid #039132; /* Border color */
+  transition: all 0.3s ease; /* Smooth transition for hover effect */
+}
+.pagination .page-link:hover {
+  color: #fff; /* Text color on hover */
+  background: #a7aa04; /* Background color on hover */
+  border-color: #a7aa04; /* Border color on hover */
+}
+.avatar{
+  width: 6.75rem;
+  height: 6.75rem;
+}
+.comments{
+  background-color:#9e9e9e; /* Hafif gri arka plan */
+  color: #343a40; /* Koyu gri metin rengi */
+  border: 1px solid #dee2e6; /* İnce kenarlık */
+  border-radius: 0.25rem; /* Hafif yuvarlatılmış köşeler */
+  padding: 1rem; /* İçerik ile kenar arası boşluk */
+}

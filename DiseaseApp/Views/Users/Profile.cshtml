@@ -1,0 +1,76 @@
+@model User
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-4 col-lg-3 mb-4">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    @if (string.IsNullOrEmpty(Model.UserImage))
+                    {
+                        <img src="/lib/img/no-avatar.png" class="img-fluid rounded-circle mb-3" alt="User Image">
+                    }
+                    else
+                    {
+                        <img src="/lib/img/UserImage/@Model.UserName/@Model.UserImage" class="img-fluid rounded-circle mb-3" alt="User Image">
+                    }
+                    <h5 class="card-title">@Model.Name</h5>
+                    @if(User.Identity?.Name == Model.UserName)
+                    {
+                        <form asp-action="ChangeProfilePhoto" asp-controller="Users" enctype="multipart/form-data" method="post">
+                            <div class="mb-3">
+                                <input type="file" class="form-control" name="UserImage" required>
+                                <span asp-validation-for="UserImage" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="btn btn-warning">Change Photo</button>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-8 col-lg-9">
+            @if(User?.FindFirstValue(ClaimTypes.Role) == "Admin" || User?.FindFirstValue(ClaimTypes.Role) == "Researcher")
+            {
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <h5 class="card-title">Published Articles</h5>
+                            <ul class="list-group">
+                                @foreach (var post in Model.Posts)
+                                {
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <a href="/posts/details/@post.Url" class="text-decoration-none">@post.Title</a>
+                                        <span class="badge bg-warning">@post.PublishedOn.ToString("MMM dd, yyyy")</span>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div id="comments" class="mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Comments</h5>
+                        <ul class="list-group">
+                            @foreach (var comment in Model.Comments)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>@comment.Text</span>
+                                    <a href="/posts/details/@comment.Post.Url" class="text-decoration-none">
+                                        <i class="bi bi-chat-left-dots"></i> <u>[@comment.Post.Title]</u>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/lib/js/script-profile.js"></script>

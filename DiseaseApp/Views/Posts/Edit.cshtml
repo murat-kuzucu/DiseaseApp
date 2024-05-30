@@ -1,0 +1,88 @@
+@model PostEditViewModel
+@{
+    Layout = "_Layout";
+}
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="card shadow bg-transparent">
+                    <div class="card-body p-4">
+                        <h1 class="mb-4 text-center fw-bold display-4 text-secondary">Edit an Article</h1>
+                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+                        <input type="hidden" asp-for="PostId">
+
+                        <div class="mb-3">
+                            <label for="postImage" class="form-label fw-bold fs-5 mb-2 text-secondary">Change Article Photo</label>
+                            <input type="file" class="form-control" name="postImage">
+                            <span asp-validation-for="PostImage" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3 form-group rounded-pill shadow-sm">
+                            <label asp-for="Title" class="form-label fw-bold fs-5 mb-2 text-secondary"></label>
+                            <input asp-for="Title" class="form-control" required />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3 form-group rounded-pill shadow-sm">
+                            <label asp-for="Description" class="form-label fw-bold fs-5 mb-2 text-secondary"></label>
+                            <input asp-for="Description" class="form-control" required />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3 form-group rounded-pill shadow-sm">
+                            <label asp-for="Content" class="form-label fw-bold fs-5 mb-2 text-secondary"></label>
+                            <textarea asp-for="Content" class="form-control" id="Content" required></textarea>
+                            <span asp-validation-for="Content" class="text-danger"></span>
+                        </div>
+
+                        @if(User?.FindFirstValue(ClaimTypes.Role) == "Admin")
+                        {
+                            <div class="mb-3 form-check form-switch">
+                                <input asp-for="IsActive" class="form-check-input">
+                                <label asp-for="IsActive" class="form-check-label fw-bold fs-5 text-secondary">Is Active</label>
+                            </div>
+                        }
+
+                        <button type="submit" class="btn btn-primary w-100 rounded-pill shadow-sm" style="color: black;">Edit</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="bg-transparent shadow p-4">
+                    <div class="card-header">
+                        <h5 class="card-title text-center">Tags</h5>
+                        @foreach(var tag in ViewBag.Tags ?? new List<Tag>())
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                       type="checkbox"
+                                       id="tag_@tag.TagId"
+                                       value="@tag.TagId"
+                                       @(Model.TagIds.Contains(tag.TagId) ? "checked" : "")
+                                       name="TagIds">
+                                <label class="form-check-label" for="tag_@tag.TagId">
+                                    <div class="bg-@tag.Color bg-opacity-10 text-dark fw-bold">
+                                        @tag.Text
+                                    </div>
+                                </label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <script src="/lib/tinymce/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: '#Content',
+            plugins: 'lists link image imagetools',
+            toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
+        });
+    </script>
+}

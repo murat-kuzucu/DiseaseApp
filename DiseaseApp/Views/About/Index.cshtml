@@ -1,0 +1,88 @@
+@{
+    Layout = "_Layout";
+}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="display-4 text-center">About MindJournalHub</h1>
+            <p class="lead text-center">A brief overview of the technologies and design patterns used in our project development.</p>
+            <hr class="my-4">
+
+            <h2 class="mb-4">Project Development Technologies</h2>
+
+            <div class="mb-5">
+                <div class="tech-item mb-4">
+                    <h4>ASP.NET Core 8 MVC</h4>
+                    <p>Utilizes the Model-View-Controller architecture to create a well-structured and maintainable codebase.</p>
+                </div>
+
+                <div class="tech-item mb-4">
+                    <h4>Database Management</h4>
+                    <p>MSSQL Server Express is used for the primary database with the flexibility to use MySQL if preferred.</p>
+                </div>
+
+                <div class="tech-item mb-4">
+                    <h4>Entity Framework Core 8</h4>
+                    <p>Implements code-first approach for database management, ensuring efficient development and database synchronization.</p>
+                </div>
+
+                <div class="tech-item mb-4">
+                    <h4>Bootstrap 5</h4>
+                    <p>Provides a responsive and sleek CSS library for styling the user interface.</p>
+                </div>
+
+                <div class="tech-item mb-4">
+                    <h4>jQuery</h4>
+                    <p>Includes the jQuery library for advanced JavaScript functionality.</p>
+                </div>
+
+                <div class="tech-item">
+                    <h4>AJAX</h4>
+                    <p>Facilitates asynchronous requests to improve user experience and application performance.</p>
+                </div>
+            </div>
+
+            <h2 class="mb-4">Design Patterns and Security</h2>
+
+            <div class="mb-5">
+                <div class="design-pattern mb-4">
+                    <h4>Repository Design Pattern</h4>
+                    <p>Ensures a clean separation of concerns and enhances the maintainability of the code.</p>
+                </div>
+
+                <div class="security-measures">
+                    <h4>Security Measures</h4>
+                    <p>Cookie-based authentication and authorization in the login section to manage user access securely.</p>
+                    <p>SHA-512 hash algorithm for enhanced password security, ensuring that user data is well-protected.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    h1.display-4 {
+        font-weight: 700;
+        color: #343a40;
+    }
+    h2 {
+        color: #007bff;
+    }
+    h4 {
+        color: #6c757d;
+    }
+    p {
+        color: #495057;
+    }
+    .tech-item {
+        border-left: 5px solid #007bff;
+        padding-left: 15px;
+    }
+    .design-pattern, .security-measures {
+        border-left: 5px solid #28a745;
+        padding-left: 15px;
+    }
+</style>

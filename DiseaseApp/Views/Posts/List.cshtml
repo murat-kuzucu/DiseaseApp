@@ -1,0 +1,54 @@
+@model List<Post>
+
+    @{
+        Layout = "_Layout";
+    }
+    
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-12 col-md-8 col-lg-6">
+                <h2>Article List</h2>
+                <a href="/Posts/Create" class="btn btn-sm btn-primary">Create New</a>
+                <hr>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width: 150px;">Image</th>
+                            <th>Title</th>
+                            <th>Is Active</th>
+                            <th style="width: 100px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var post in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(post.PostImage))
+                                    {
+                                        <img src="/lib/img/PostImage/@post.PostId/@post.PostImage" class="img-fluid rounded mb-3" alt="Post Image">
+                                    }
+                                    else
+                                    {
+                                        <img src="/lib/img/no-post-image.jpg" class="img-fluid rounded mb-3" alt="Post Image">
+                                    }
+                                </td>
+                                <td><a href="/Posts/Details/@post.Url">@post.Title</a></td>
+                                <td>@post.IsActive</td>
+                                <td>
+                                    <a href="/posts/edit/@post.PostId" class="btn btn-sm btn-warning text-center">Edit</a>
+                                    <form asp-action="Delete" method="post" style="display:inline-block;" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                                        <input type="hidden" name="postId" value="@post.PostId" />
+                                        <button type="submit" class="btn btn-sm btn-danger text-center">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/lib/tinymce/tinymce.min.js"></script>
+    

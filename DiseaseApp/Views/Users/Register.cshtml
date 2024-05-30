@@ -1,0 +1,64 @@
+@model RegisterViewModel
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow bg-transparent">
+                <div class="card-body p-4">
+                    <h1 class="mb-4 text-center fw-bold display-4 text-secondary">Register</h1>
+                    <form asp-action="Register" method="post" class="needs-validation" novalidate>
+                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+                        
+                        <div class="mb-3 form-group rounded-pill shadow-sm">
+                            <label asp-for="UserName" class="form-label fw-bold fs-5 mb-2 text-secondary"></label>
+                            <input asp-for="UserName" class="form-control" required />
+                            <div class="invalid-feedback">Please enter Username.</div>
+                        </div>
+                        <div class="mb-3 form-group rounded-pill shadow-sm">
+                            <label asp-for="Name" class="form-label fw-bold fs-5 mb-2 text-secondary"></label>
+                            <input asp-for="Name" class="form-control" required />
+                            <div class="invalid-feedback">Please enter name.</div>
+                        </div>
+                        <div class="mb-3 form-group rounded-pill shadow-sm">
+                            <label asp-for="Email" class="form-label fw-bold fs-5 mb-2 text-secondary"></label>
+                            <input asp-for="Email" class="form-control" required />
+                            <div class="invalid-feedback">Please enter your email.</div>
+                        </div>
+                        <div class="mb-3 form-group rounded-pill shadow-sm">
+                            <label asp-for="Password" class="form-label fw-bold fs-5 mb-2 text-secondary"></label>
+                            <input asp-for="Password" type="password" class="form-control" required />
+                            <div class="invalid-feedback">Please enter your password.</div>
+                        </div>
+                        <div class="mb-3 form-group rounded-pill shadow-sm">
+                            <label asp-for="ConfirmPassword" class="form-label fw-bold fs-5 mb-2 text-secondary"></label>
+                            <input asp-for="ConfirmPassword" type="password" class="form-control" required />
+                            <div class="invalid-feedback">Please enter your password.</div>
+                        </div>
+                        <div class="mb-3 form-group rounded-pill shadow-sm">
+                            <label asp-for="UserRole" class="form-label fw-bold fs-5 mb-2 text-secondary"></label>
+                            <select asp-for="UserRole" class="form-control">
+                                <option value="1" disabled>Admin</option>
+                                <option value="2" disabled>Researcher</option>
+                                <option value="3" selected>User</option>
+                            </select>
+                            <span asp-validation-for="UserRole" class="text-danger"></span>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100 tag-position rounded-pill shadow-sm" style="color:black;">Register</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .btn-primary:hover{
+        background-color: #999999;
+        color: #ffff; /* darker shade of primary color */
+    }
+</style>

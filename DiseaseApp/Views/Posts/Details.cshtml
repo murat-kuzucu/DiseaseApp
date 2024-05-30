@@ -1,0 +1,145 @@
+@model Post
+@{
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="bg-white p-4 shadow-sm rounded">
+            <h1 class="h4 mb-4 text-center text-primary">@Model.Title</h1>
+            <div class="tags mb-3 text-center">
+                @foreach (var tag in Model.Tags)
+                {
+                    <a href="/posts/tag/@tag.Url" class="badge bg-@tag.Color bg-opacity-25 text-dark fw-bold">@tag.Text</a>
+                }
+            </div>
+            @if (!string.IsNullOrEmpty(Model.PostImage))
+            {
+                <div class="text-center">
+                    <img src="/lib/img/PostImage/@Model.PostId/@Model.PostImage" class="img-fluid rounded mb-3 shadow-sm" alt="Post Image">
+                </div>
+            }
+            <ul class="list-inline my-3 text-center">
+                <li class="list-inline-item">
+                    <i class="bi bi-calendar"></i> @Model.PublishedOn.ToString("d")
+                </li>
+                <li class="list-inline-item">
+                    <i class="bi bi-person"></i> <a href="/profile/@Model.User.UserName">@Model.User.Name</a>
+                </li>
+            </ul>
+            <hr class="my-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div class="mb-4">
+                            <h4 class="text-secondary text-center">Content</h4>
+                            <div class="card bg-light shadow-sm">
+                                <div class="card-body">
+                                    <p class="card-text">@Html.Raw(@Model.Content)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-light mt-4 p-4 rounded shadow-sm">
+            <div class="card bg-transparent border-0">
+                <div class="card-header pb-0 text-center bg-transparent">
+                    <h4><span id="commentCount">@Model.Comments.Count()</span> Comments</h4>
+                </div>
+                <div class="card-body">
+                    <div id="comments">
+                        @foreach (var comment in Model.Comments)
+                        {
+                            <div class="my-4 d-flex align-items-start">
+                                <img src="/lib/img/UserImage/@comment.User.UserName/@comment.User.UserImage" alt="" class="avatar rounded-circle shadow-sm me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                                <div>
+                                    <div class="mb-2 d-flex align-items-center">
+                                        <h6 class="mb-0 me-2">
+                                            <a href="/profile/@comment.User.UserName">@comment.User.Name</a>
+                                        </h6>
+                                        <span class="text-muted" style="font-size: 0.9rem;">@comment.PublishedOn.ToString("G")</span>
+                                    </div>
+                                    <p class="mb-0">@comment.Text</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    @if (User.Identity!.IsAuthenticated)
+                    {
+                        <hr class="my-4">
+                        <div class="bg-white p-4 rounded shadow-sm">
+                            <h4 class="mb-4 text-center">Add Comment</h4>
+                            <form id="commentForm" action="/posts/AddComment" method="post">
+                                <input type="hidden" id="PostId" name="PostId" value="@Model.PostId">
+                                <div class="mb-3">
+                                    <textarea name="Text" id="Text" rows="4" class="form-control" placeholder="Write your comment here" required></textarea>
+                                </div>
+                                <div class="mb-3 text-end">
+                                    <button id="btnCommentSubmit" type="submit" class="btn btn-warning">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning text-center" role="alert">
+                            <p class="mb-0">You must log in to write a comment. 
+                                <a href="/Users/Login" class="alert-link">Login here</a>
+                            </p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <vc:tags-menu></vc:tags-menu>
+        <vc:new-posts></vc:new-posts>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="/lib/jquery/jquery.min.js"></script>
+    <script src="/lib/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnCommentSubmit").click(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("AddComment")',
+                    dataType: 'json',
+                    data: {
+                        PostId: $('#PostId').val(),
+                        Text: $('#Text').val(),
+                    },
+                    success: function (comment) {
+                        var date = new Date(comment.PublishedOn);
+                        $("#comments").append(`
+                            <div class="my-4 d-flex align-items-start">
+                                <img src="/lib/img/UserImage/${comment.User.UserName}/${comment.User.UserImage}" alt="" class="avatar rounded-circle shadow-sm me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                                <div>
+                                    <div class="mb-2 d-flex align-items-center">
+                                        <h6 class="mb-0 me-2">
+                                            <a href="/profile/${comment.User.UserName}">${comment.User.UserName}</a>
+                                        </h6>
+                                        <span class="text-muted" style="font-size: 0.9rem;">${date.toLocaleString()}</span>
+                                    </div>
+                                    <p class="mb-0">${comment.Text}</p>
+                                </div>
+                            </div>
+                        `);
+                        $('#Text').val('');
+                        var count = parseInt($('#commentCount').text());
+                        $('#commentCount').text(count + 1);
+                    }
+                });
+            });
+        });
+    </script>
+}
